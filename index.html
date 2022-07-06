@@ -8,17 +8,21 @@
   <link rel="stylesheet" href="style.css" />
   <script type="text/javascript" src="modules/lodash.min.js"></script>
   <script type="text/javascript" src="modules/test-boilerplate.js"></script>
+  <script type="text/javascript" src="pokemons-no-name-types.js"></script>
   <script type="text/javascript" src="script.js"></script>
 </head>
 
 <body>
   <div class="entryText">
     <h1>ポケモンdeしりとり</h1>
+  </div>
+  <div class="entryText">
     <p>
-      <input type="text" id="inputText">
+      <input type="text" id="inputText" placeholder="カタカナでポケモンのなまえをかいてね">
     </p>
     <p>
-      <input type="button" value="GO!" id="textGo" onclick="onGoButtonClick();"/>
+      <!-- <input type="button" value="GO!" id="textGo" onclick="onGoButtonClick();"/> -->
+      <input type="button" value="GO!" id="textGo" onclick="onPokeGoButton();"/>
     </p>
   </div>
   <div id="alertMessage"></div>
