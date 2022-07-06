@@ -1,0 +1,48 @@
+body {
+  background-color:bisque;
+}
+
+h1 {
+  text-align: center;
+}
+
+footer {
+  font-size: 80%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+input {
+  width: 100%;
+  background-color:lavender;
+}
+input#restart {
+  width:auto;
+  margin: 0 auto;
+  /* float: ; */
+}
+input#textGo {
+  width:50px;
+  float: right;
+}
+#alertMessage {
+  color: red;
+  font-weight: bold;
+}
+
+.entryText {
+  width: 300px;
+  margin: 10px auto;
+  /* position: fixed; */
+  /* top: 0; */
+}
+
+button {
+  background-color:lavender;
+}
+#memory {
+  width: 300px;
+  margin: 10px auto;
+  /* display: inline-block; */
+}
