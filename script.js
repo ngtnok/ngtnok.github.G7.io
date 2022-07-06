@@ -58,12 +58,17 @@ function getArrayOKvariation () {
   // 入力値の最後の１文字を取得する
   let chainedLastOne = "";
   // 最後の１文字が伸ばし棒だったときの処理
-  if (getIdInputText.value.slice(-1) === "ー") {
+  let checkLastOne = getIdInputText.value.slice(-1);
+  if (checkLastOne === "ー" || checkLastOne === "ャ" || checkLastOne === "ュ" || checkLastOne === "ョ") {
     chainedLastOne = getIdInputText.value.slice(-2, 1);
   } else {
     chainedLastOne = getIdInputText.value.slice(-1);
   }
-  console.log('chainedLastOne: ', chainedLastOne);
+  let checkLastTwo =getIdInputText.value.slice(-2);
+  if (checkLastTwo === "ャー" || checkLastTwo === "ュー" || checkLastTwo === "ョー") {
+    chainedLastOne = getIdInputText.value.slice(-3, 1);
+  }
+
   return arrayOfWordSeries.forEach(function(arrayOfConvert) {
     for (const aWord of arrayOfConvert) {
       if (aWord === chainedLastOne) {
@@ -117,9 +122,6 @@ function onPokeGoButton() {
     return false;
   }
 
-  chainedLastWord = [];
-  getArrayOKvariation();
-  console.log('chainedLastWord: ', chainedLastWord);
 
   //todo 文字が繋がらなかったらドボン
     //todo 濁点・半濁点を許容する
@@ -128,12 +130,19 @@ function onPokeGoButton() {
 
   
   //todo 存在するポケモンか判別する-->メッセージ表示「あたらしいポケモンにであったんだね」
+  isPokemon();
+  if (isPokemonSeries === false) {
+    return false;
+  }
 
   //todo memoryをオブジェクトで覚えておく(Noをidとしてcreate)
   //todo 既出のポケモンか判別する-->memoryにて赤字(id取得でcss操作)-->ドボン
 
   //todo 最後の文字を取得
   // chainedLastWordに再代入
+  chainedLastWord = [];
+  getArrayOKvariation();
+  console.log('chainedLastWord: ', chainedLastWord);
 
   // 以下、しりとり成功処理
 
@@ -246,6 +255,36 @@ function onGoButtonRetry() {
     onRestartClick();
   }
 }
+
+let isPokemonSeries = false;
+//todo 存在するポケモンか判別する-->メッセージ表示「あたらしいポケモンにであったんだね」
+function isPokemon() {
+  // 文字入力欄
+  const getIdInputText = document.getElementById("inputText");
+  // アラートメッセージ欄(赤字)
+  const divAlert = document.getElementById("alertMessage");
+  // 判定ブーリアン初期化
+  isPokemonSeries = false;
+
+  pokemons.forEach(function(objMonster) {
+    for (const key in objMonster) {
+      if (objMonster[key] === getIdInputText.value) {
+        isPokemonSeries = true;
+        break;
+      }
+    }
+  })
+
+  // 存在しないポケモンだったら-->メッセージ表示
+  if (isPokemonSeries === false) {
+    // 入力欄にフォーカス
+    getIdInputText.focus();
+    // メッセージ表示
+    divAlert.innerText = "あたらしいポケモンかな・・・？ほかのポケモンをおしえてね";
+
+  }
+}
+
 
 //// テキストボックス内にカタカナ推奨を薄く表示する-->index.htmlで実装済み
 
