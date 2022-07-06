@@ -20,6 +20,10 @@
     <p>
       <input type="text" id="inputText" placeholder="カタカナでポケモンのなまえをかいてね">
     </p>
+    <script type="text/javascript">
+      // ページ読み込みと同時にテキストボックスにフォーカスする
+      document.getElementById("inputText").focus();
+    </script>
     <p>
       <!-- <input type="button" value="GO!" id="textGo" onclick="onGoButtonClick();"/> -->
       <input type="button" value="GO!" id="textGo" onclick="onPokeGoButton();"/>
