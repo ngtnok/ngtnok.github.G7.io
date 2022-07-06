@@ -45,6 +45,9 @@ function onPokeGoButton() {
 
   // アラートメッセージをリセットする
   alertReset();
+  // Go!ボタン表示する<-ドボン直後想定
+  const goButton = document.getElementById("textGo");
+  goButton.style.visibility ="visible";
 
   // 入力文字がない(空白)=>入力を促すメッセージ表示
   if (checkIsNotEmpty() === false) {
@@ -148,15 +151,26 @@ function dobonN() {
   const getIdInputText = document.getElementById("inputText");
   // Go!ボタン
   const goButton = document.getElementById("textGo");
+  // しりとりテキスト表示欄(ページ中央部 GOボタンより下)
+  const divPreviewTextChain = document.getElementById("memory");
 
 
   // 最後の１文字を取得して[ん]と一致するか判別する
   let text = getIdInputText.value.substr(-1, 1);
   if (text === "ン") {
+    const p = document.createElement("p");
+    p.textContent = getIdInputText.value;
+    divPreviewTextChain.insertBefore(p, divPreviewTextChain.firstChild);
+    // divPreviewTextChain.appendChild(p);
+    // 入力欄をクリア
+    getIdInputText.value = "";
+    // 入力欄にフォーカス
+    getIdInputText.focus();
     // ドボンメッセージ表示
     divAlert.innerText = "ざんねん！また あそんでね🐊";
     // Goボタン非表示-->最初から始める
-    goButton.style.display = "none";
+    goButton.style.visibility = "hidden";
+    // goButton.style.display = "none";
     return true;
   } else {
     // [ン]は付いてない-->しりとり成功
