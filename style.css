@@ -6,6 +6,11 @@ h1 {
   text-align: center;
 }
 
+div {
+  width: 300px;
+  align-content: center;
+}
+
 footer {
   font-size: 80%;
   position: fixed;
