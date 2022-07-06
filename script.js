@@ -16,12 +16,18 @@ const miracleWord = [{
   name: "バンギラス"
 }];
 
+// 濁点・半濁点の許容シリーズ
 
 
 // テキストボックスでEnter押したらGOアクション起動
 let textBox = document.getElementById("inputText");
 document.onkeydown = function(event) {
+  
+  // アラートメッセージ欄(赤字)
+  const divAlert = document.getElementById("alertMessage");
+
   if (event.key === "Enter") {
+    divAlert.innerText !== "" ? alertReset(): true;
     onPokeGoButton();
     // testEnterGo();
   }
@@ -30,6 +36,42 @@ document.onkeydown = function(event) {
 // テキストボックスEnterキー発火をテスト
 function testEnterGo(){
   console.log("Enter発火成功");
+}
+
+// 濁点・半濁点の許容対応(ハ→パ・バでも可)
+const arrayOfWordSeries = [
+  ["ア"], ["イ"], ["ウ"], ["エ"], ["オ"], ["ナ"], ["ニ"], ["ヌ"], ["ネ"], ["ノ"],
+  ["マ"], ["ミ"], ["ム"], ["メ"], ["モ"], ["ヤ"], ["ユ"], ["ヨ"], ["ラ"], ["リ"], ["ル"], ["レ"], ["ロ"], ["ワ"],
+  ["カ", "ガ"], ["キ", "ギ"], ["ク", "グ"], ["ケ", "ゲ"], ["コ", "ゴ"],
+  ["サ", "ザ"], ["シ", "ジ"], ["ス", "ズ"], ["セ", "ゼ"], ["ソ", "ゾ"],
+  ["タ", "ダ"], ["チ"], ["ツ"], ["テ", "デ"], ["ト", "ド"],
+  ["ハ", "パ", "バ"], ["ヒ", "ピ", "ビ"], ["フ", "プ", "ブ"], ["ヘ", "ペ", "ベ"], ["ホ", "ポ", "ボ"]
+];
+// 次のGOまで覚えておく
+let chainedLastWord = [];
+function getArrayOKvariation () {
+  // 文字入力欄
+  // 文字を入力できる
+  const getIdInputText = document.getElementById("inputText");
+  console.log('getIdInputText: ', getIdInputText.value);
+  
+  // 入力値の最後の１文字を取得する
+  let chainedLastOne = "";
+  // 最後の１文字が伸ばし棒だったときの処理
+  if (getIdInputText.value.slice(-1) === "ー") {
+    chainedLastOne = getIdInputText.value.slice(-2, 1);
+  } else {
+    chainedLastOne = getIdInputText.value.slice(-1);
+  }
+  console.log('chainedLastOne: ', chainedLastOne);
+  return arrayOfWordSeries.forEach(function(arrayOfConvert) {
+    for (const aWord of arrayOfConvert) {
+      if (aWord === chainedLastOne) {
+        chainedLastWord = arrayOfConvert;
+        break;
+      }
+    }
+  })
 }
 
 // version POKEMONS
@@ -43,6 +85,8 @@ function onPokeGoButton() {
   // アラートメッセージ欄(赤字)
   const divAlert = document.getElementById("alertMessage");
 
+  // アラートメッセージからドボン直後か判別-->memoryリセット
+
   // アラートメッセージをリセットする
   alertReset();
   // Go!ボタン表示する<-ドボン直後想定
@@ -51,6 +95,7 @@ function onPokeGoButton() {
 
   // 入力文字がない(空白)=>入力を促すメッセージ表示
   if (checkIsNotEmpty() === false) {
+    console.log("入力値：空白");
     return false;
   }
 
@@ -72,16 +117,23 @@ function onPokeGoButton() {
     return false;
   }
 
+  chainedLastWord = [];
+  getArrayOKvariation();
+  console.log('chainedLastWord: ', chainedLastWord);
+
   //todo 文字が繋がらなかったらドボン
-    //todo 前回値の最後の文字が伸ばし棒だったときの処理
+    //todo 濁点・半濁点を許容する
+    //todo 前回値の最後の文字が伸ばし棒だったときの処理<-伸ばし棒の１字前で判定
     //todo 前回値の最後の文字が小さい文字(ァィゥェォャュョ)だったときの処理
 
   
-  //todo 存在するポケモンか判別する-->メッセージ表示
+  //todo 存在するポケモンか判別する-->メッセージ表示「あたらしいポケモンにであったんだね」
 
-  //todo 既出のポケモンか判別する-->メッセージ表示
+  //todo memoryをオブジェクトで覚えておく(Noをidとしてcreate)
+  //todo 既出のポケモンか判別する-->memoryにて赤字(id取得でcss操作)-->ドボン
 
-
+  //todo 最後の文字を取得
+  // chainedLastWordに再代入
 
   // 以下、しりとり成功処理
 
@@ -99,8 +151,10 @@ function onPokeGoButton() {
   
 }
 
-//todo 頭文字ヒントを文字色薄くふんわり表示
+//todo タイトル・テキストボックス・メッセージ欄を上部固定
 
+//todo 10コンボごとにエフェクト追加
+//todo 頭文字ヒントを文字色薄くふんわり表示<--未出からランダム
 
 // 入力文字がカタカナ+伸ばし棒か判別
 const katakanaCheck = /^[\u30A0-\u30FF]+$/;
