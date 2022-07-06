@@ -14,12 +14,14 @@ footer {
 }
 
 input {
-  width: 100%;
+  width: 230px;
+  height: 25px;
   background-color:lavender;
+  float: left;
 }
 input#restart {
   width:auto;
-  margin: 0 auto;
+  margin: auto;
   /* float: ; */
 }
 input#textGo {
@@ -29,6 +31,8 @@ input#textGo {
 #alertMessage {
   color: red;
   font-weight: bold;
+  margin: 10px auto;
+  display: inline-block;
 }
 
 .entryText {
@@ -44,5 +48,5 @@ button {
 #memory {
   width: 300px;
   margin: 10px auto;
-  /* display: inline-block; */
+  display: inline-block;
 }
