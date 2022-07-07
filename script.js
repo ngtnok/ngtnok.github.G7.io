@@ -296,7 +296,7 @@ function isPokemon() {
     // 入力欄にフォーカス
     getIdInputText.focus();
     // メッセージ表示
-    divAlert.innerText = "あたらしいポケモンかな・・・？ほかのポケモンをおしえてね";
+    divAlert.innerHTML = "あたらしいポケモンかな・・・？<br>ほかのポケモンをおしえてね";
 
   }
 }
@@ -378,104 +378,4 @@ function isAlready() {
 
 //todo -->memoryにて赤字(id取得でcss操作)-->ドボン
 
-
-//// テキストボックス内にカタカナ推奨を薄く表示する-->index.htmlで実装済み
-
-// let monsterNo = "";
-
-// pokemon-no-name-types.jsよりname値とinnerTextを照合して、番号noを返す
-// for (const monster of pokemons) {
-//   if (monster.name === getIdInputText.value) {
-//     monsterNo = monster.no.toString().padStart(3, '0');
-//     break;
-//   }
-// }
-
-// console.log(monsterNo, getIdInputText.value);
-
-// monsterNoで画像表示挿入
-// const pokeElem = document.createElement("div");
-// pokeElem.classList.add("pokemon");
-// const pokeInnerHTML = `
-//   <p>${getIdInputText.value}</p><img src="https://pokeres.bastionbot.org/images/pokemon/${monsterNo}.png">
-// `;
-// pokeElem.innerHTML = pokeInnerHTML;
-// divPreviewTextChain.insertBefore(pokeElem, divPreviewTextChain.firstChild);
-
-
-
-
-// 以下、旧バージョン仕様含む
-
-
-// 与えられた文字列が全てひらがなか判定する
-const kanaCheck = /^[\u{3000}-\u{301C}\u{3041}-\u{3093}\u{309B}-\u{309E}]+$/mu;
-// test(kanaCheck.test("あいうえお"),true);
-// test(kanaCheck.test("亜いうえお"), false);
-// test(kanaCheck.test("亜いうえ尾"), false);
-// test(kanaCheck.test("あ1いうえ尾"), false);
-// testOK
-//// 伸ばし棒がNG判定->仕様変更カタカナ縛りで解消
-
-// アラートメッセージ欄(赤字)
-// const divAlert = document.getElementById("alertMessage");
-// しりとりテキスト表示欄(ページ中央部 GOボタンより下)
-// const divPreviewTextChain = document.getElementById("memory");
-// 文字入力欄
-// const getIdInputText = document.getElementById("inputText");
-
-
-let chainedCnt = 0;
-
-
-// GO!ボタンが押されたときのアクション
-function onGoButtonClick() {
-  
-  // アラートメッセージ欄(赤字)
-  const divAlert = document.getElementById("alertMessage");
-  // しりとりテキスト表示欄(ページ中央部 GOボタンより下)
-  const divPreviewTextChain = document.getElementById("memory");
-  // 文字入力欄
-  const getIdInputText = document.getElementById("inputText");
-
-  // アラートメッセージをリセットする
-  alertReset();
-
-  // 文字入力欄が空白じゃないか判別する
-  if (checkIsNotEmpty() === false) {
-    return false;
-  }
-
-  // ひらがなだけの文字か判別する
-  if (kanaCheck.test(getIdInputText.value) === false) {
-    // アラートメッセージを表示
-    divAlert.innerHTML = "ひらがなでかいてほしいな..."
-
-    // 入力欄をクリア
-    getIdInputText.value = "";
-    // 入力欄にフォーカス
-    getIdInputText.focus();
-
-    return false;
-  }
-
-  // 最後に[ん]が付くか判別する-->ドボン
-  if (dobonN() === true) {
-    return false;
-  }
-
-  // 前の言葉の最後の文字から始まっているか判別する
-    // false -->ドボン
-
-  // しりとり成功
-  // 入力値をPタグで挿入
-  //todo 成功エフェクト
-  const p = document.createElement("p");
-  p.textContent = getIdInputText.value;
-  divPreviewTextChain.insertBefore(p, divPreviewTextChain.firstChild);
-  // divPreviewTextChain.appendChild(p);
-  // 入力欄をクリア
-  getIdInputText.value = "";
-  // 入力欄にフォーカス
-  getIdInputText.focus();
-}
+console.log('pokemons: ', pokemons.length);
