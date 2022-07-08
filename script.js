@@ -184,7 +184,7 @@ function setMessageByTen(cntChainedMonsters) {
   if (cntChainedMonsters % 5 === 0) {
     // ランダムで応援メッセージをモンスター名前横に表示(class="yell"←青字)
     yellStr = `${cntChainedMonsters}コンボ！${yellMessages[getRandNum(yellMessages.length)]}`
-    yellStr = "<span class='yell'>" + yellStr + "</span>";
+    yellStr = " <span class='yell'>" + yellStr + "</span>";
     console.log('yellStr: ', yellStr);
     return yellStr;
   } else {
