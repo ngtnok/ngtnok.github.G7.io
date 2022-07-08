@@ -3,20 +3,7 @@
 
 
 //todo 隠れミラクルワードで画面エフェクト->背景画像切り替えしたい
-const miracleWord = [{
-  path: "",
-  name: "アルセウス"
-},{
-  path: "",
-  name: "ピカチュウ"
-},{
-  path: "",
-  name: "イーブイ"
-},{
-  path: "",
-  name: "バンギラス"
-}];
-
+// pokemons["miracleKey"]が true のモンスターがGOされたら
 
 
 // テキストボックスでEnter押したらGOアクション起動
@@ -146,7 +133,8 @@ function onPokeGoButton() {
     return false;
   }
 
-  //todo memoryをオブジェクトで覚えておく(ポケモン名前をhtmlのidとしてcreate)
+  // memoryをオブジェクトで覚えておく
+  //todo (ポケモン名前をhtmlのidとしてcreate)
   //todo 既出のポケモンか判別する-->memoryにて赤字(id取得でcss操作)-->ドボン
   isAlready();
 
@@ -161,9 +149,11 @@ function onPokeGoButton() {
   // 既出ポケモンに追加
   chainedMonsters.push(getIdInputText.value);
 
-  //todo GOボタンで入力した文字を確定する
+  // 5コンボごとに応援メッセージ付与
+  let yellStr = setMessageByTen(chainedMonsters.length);
+  // GOボタンで入力した文字を確定する
   const p = document.createElement("p");
-  p.textContent = getIdInputText.value;
+  p.innerHTML = getIdInputText.value + yellStr; // 応援メッセージここに接続
   divPreviewTextChain.insertBefore(p, divPreviewTextChain.firstChild);
   // divPreviewTextChain.appendChild(p);
   // 入力欄をクリア
@@ -178,7 +168,52 @@ function onPokeGoButton() {
 //todo タイトル・テキストボックス・メッセージ欄を上部固定
 
 //todo 10コンボごとにエフェクト追加
+// 応援メッセージ配列
+const yellMessages = [
+  "いいね！", "さすが！", "まだまだ！", "こいこい", "ステキ"
+]
+// 0～最大値maxのランダム数値を返す
+function getRandNum(max) {
+  return Math.floor(Math.random() * (max + 1));
+}
+function setMessageByTen(cntChainedMonsters) {
+  // 応援メッセージを初期化
+  let yellStr = "";
+
+  // chainedMonsters.length % 5 === 0 だったら
+  if (cntChainedMonsters % 5 === 0) {
+    // ランダムで応援メッセージをモンスター名前横に表示(class="yell"←青字)
+    yellStr = `${cntChainedMonsters}コンボ！${yellMessages[getRandNum(yellMessages.length)]}`
+    yellStr = "<span class='yell'>" + yellStr + "</span>";
+    console.log('yellStr: ', yellStr);
+    return yellStr;
+  } else {
+    return "";
+  }
+}
+
+
+
 //todo 頭文字ヒントを文字色薄くふんわり表示<--未出からランダム
+// onPokeGoButton起動する度に初期化
+  // ->スタートタイマーをリセット＆前回ヒントを削除
+// pokemonsから、今回ヒントするモンスター決める
+  // 現在のchainedLastWordがあったら
+    // 現在のchainedLastWordで始まるポケモンを抽出する
+    // 最後に[ン]が付くモンスターを除去する
+    // 既出モンスターchainedMonstersを除去する
+    // 残りのモンスターがいたら
+      // そのうち、ランダムで1体の名前
+  // else
+    // 全てのpokemonsから、miracleKey:trueのモンスターを除去する
+    // 残りのうち、ランダムで1体の名前
+// if ランダム1体の名前があったら
+  // 画面にヒントを表示させる
+    // 画面上のランダムな位置を決める
+    // onPokeGoButton起動から5秒たったら
+    // 1.5秒に1文字ずつふわっと表示する
+// else
+  // もうchainedLastWordで始まるモンスターはいないよ
 
 // 入力文字がカタカナ+伸ばし棒か判別
 const katakanaCheck = /^[\u30A0-\u30FF]+$/;
@@ -339,7 +374,7 @@ function isChained() {
   }
 }
 
-//todo 既出のポケモンか判別する(chainedMonstersに含まれたらドボン)
+// 既出のポケモンか判別する(chainedMonstersに含まれたらドボン)
 function isAlready() {
   // アラートメッセージ欄(赤字)
   const divAlert = document.getElementById("alertMessage");
