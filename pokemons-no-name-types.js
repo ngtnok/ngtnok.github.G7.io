@@ -16716,5 +16716,9 @@ const pokemons = [
   },
   {
     "name": "カブレヒレ"
+  },
+  {
+    "miracleKey": true,
+    "name": "クサタベー"
   }
 ]
